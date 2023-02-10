@@ -1,0 +1,135 @@
+body {
+    background: url("https://images.unsplash.com/photo-1675773681567-2783a1f8bc89?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1074&q=80");
+
+    /* prevent overflow */
+    overflow-x: hidden;
+}
+
+.flex{
+    display: flex;
+    gap: var(--gap, 1rem)
+}
+.logo {
+    color: white;
+    margin: 2rem;
+}
+
+.primary-header {
+    align-items: center;
+    justify-content: space-between;
+}
+
+.mobile-nav-toggle {
+    display: none;
+}
+
+.primary-navigation {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    /* hsl - color, saturation, lightness / transparancy */
+    background: hsl(0 0% 0% / 0.75);
+}
+
+/* Creates a baseline for browser supports */
+@supports (backdrop-filter: blur(1rem)) {
+    .primary-navigation {
+        /* hsl - color, saturation, lightness / transparancy */
+        background: hsl(0 0% 100% / 0.2);
+        /* backdrop filter blur to add a bluring effect to the overlay */
+        backdrop-filter: blur(1rem);
+    }
+}
+
+.primary-navigation a {
+    text-decoration: none;
+    color: white;
+    letter-spacing: .2rem;
+    
+}
+
+.primary-navigation a > [aria-hidden="true"] {
+    font-weight: 700;
+    margin-inline-end: .75rem;
+}
+
+/* * Mobile Screens */
+
+@media (max-width: 35em) {
+    .primary-navigation {
+        /* adjust the value of gap in the flex class gap property */
+        --gap: 3em;
+
+        position: fixed;
+        /* Inset is a logical of properties top, bottom, left, right */
+        inset: 0 0 0 30%;
+        /* set the z-index to lift menu off the screen to prevent colisions */
+        z-index: 1000;
+        flex-direction: column;
+        /* min (lower limit, upper limit) sets the limit*/
+        padding: min(30vh, 10rem) 2rem;
+
+        /* This will move the menu to the right of the screen */
+        transform: translatex(100%);
+        /* add transtion */
+        transition: transform 350ms ease-out;
+    }
+
+    /* create css rules for toggle */
+    .primary-navigation[data-visible="true"] {
+        /* This will move the menu onto the screen when the button is toggled*/
+        transform: translatex(0%);
+    }
+
+    /* button styling */
+    .mobile-nav-toggle {
+        /* make it visiable */
+        display: block;
+        /* fix the button in place */
+        position: absolute;
+        /* position the button on top of everything */
+        z-index: 9999;
+        /* background to find the button */
+        background-image: url("https://images.unsplash.com/photo-1575578285291-905e55d5a789?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80");
+        /* keep the background from repeating */
+        background-repeat: no-repeat;
+        /* turn off the borders */
+        border: 0;
+        /* sets the size of the button */
+        width: 2rem;
+        /* sets height based on width 1:1 */
+        aspect-ratio: 1;
+        /* moves the postion down */
+        top: 2rem;
+        /* moves button 2rem from the right side of the screen*/
+        right: 2rem;
+    }
+
+    /* uses the aria-expanded property to toggle background image */
+    .mobile-nav-toggle[aria-expanded="true"]{
+        background-image: url("https://plus.unsplash.com/premium_photo-1673795754005-214e3e1fccba?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8ZGFya3xlbnwwfHwwfHw%3D&auto=format&fit=crop&w=2000&q=60");
+    }
+}
+
+/* * Tablet Size Screens */
+
+@media (min-width: 35em) and (max-width: 60em){
+    /* creates a break point where the numbers in the span will not be visible */
+    .primary-navigation a > span[aria-hidden]{
+        display: none;
+    }
+}
+
+/* * Desktop Size */
+@media (min-width: 35em){
+    .primary-navigation {
+        /* reset --gap */
+        --gap: clamp(1.5rem, 5vw, 3rem);
+        /* logical element setting both top and bottom padding */
+        padding-block: 2rem;
+        /* logical element setting both right and left */
+        /* clamp(lowest, variable, limit) */
+        padding-inline: clamp(3rem, 5vw, 10rem);
+    }
+ 
+}
